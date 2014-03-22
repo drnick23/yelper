@@ -28,9 +28,8 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="nameLabel" destination="H2p-sc-9uM" id="NYK-f7-PDn"/>
-                <outlet property="nameLable" destination="H2p-sc-9uM" id="xCk-dL-oef"/>
-                <outlet property="switchView" destination="H2p-sc-9uM" id="vgJ-pf-O15"/>
+                <outlet property="buttonSwitch" destination="jOl-SA-33d" id="uo4-wH-qbz"/>
+                <outlet property="nameLabel" destination="tnz-ZP-9UK" id="m7g-ak-cxP"/>
             </connections>
         </tableViewCell>
     </objects>

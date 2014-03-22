@@ -9,9 +9,8 @@
 #import "FilterTableViewCell.h"
 
 @interface FilterTableViewCell()
-
-@property (weak, nonatomic) IBOutlet UIView *nameLabel;
-@property (weak, nonatomic) IBOutlet UIView *switchView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *buttonSwitch;
 
 @end
 

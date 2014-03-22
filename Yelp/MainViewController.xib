@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="navigationBar" destination="1Ok-wA-mHo" id="rgT-ix-E5u"/>
+                <outlet property="searchBar" destination="Ekc-Mn-NXE" id="NLo-o0-gJS"/>
+                <outlet property="searchDisplayController" destination="g8s-61-gv7" id="Phs-Gy-ciy"/>
                 <outlet property="tableView" destination="gLR-2i-6tI" id="T7M-Dn-mEZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,14 +20,44 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gLR-2i-6tI">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Ok-wA-mHo">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <items>
+                        <navigationItem id="wx4-H9-2zK">
+                            <barButtonItem key="leftBarButtonItem" title="Filter" id="PLp-A0-hPK">
+                                <connections>
+                                    <action selector="onFilter:" destination="-1" id="jBx-pr-5d6"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ekc-Mn-NXE">
+                    <rect key="frame" x="90" y="0.0" width="230" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="YLu-BL-WVJ"/>
+                    </connections>
+                </searchBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
+        <searchDisplayController id="g8s-61-gv7">
+            <connections>
+                <outlet property="delegate" destination="-1" id="kH3-LC-Eb2"/>
+                <outlet property="searchBar" destination="Ekc-Mn-NXE" id="2WT-UF-j2q"/>
+                <outlet property="searchContentsController" destination="-1" id="Kcp-Ht-nCh"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="Vk4-nz-Ybf"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="YZU-6B-KbE"/>
+            </connections>
+        </searchDisplayController>
     </objects>
 </document>

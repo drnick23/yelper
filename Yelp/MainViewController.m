@@ -15,9 +15,12 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface MainViewController () <UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)onFilter:(id)sender;
 
 @property (nonatomic, strong) YelpClient *client;
 
@@ -45,6 +48,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // customize nav bar
+    self.navigationBar.tintColor = [UIColor redColor];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -52,6 +59,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     UINib *yelpResultNib = [UINib nibWithNibName:@"YelpResultTableViewCell" bundle:nil];
     [self.tableView registerNib:yelpResultNib forCellReuseIdentifier:@"YelpResultCell"];
     
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    NSLog(@"searchDisplayController reload search");
+    return YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -84,4 +97,13 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)onFilter:(id)sender {
+    NSLog(@"Go ahead and setup the filters view");
+    
+    UIViewController *filtersView = [[FiltersViewController alloc] init];
+    filtersView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:filtersView animated:YES completion:nil];
+    
+}
 @end

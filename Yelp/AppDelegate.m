@@ -16,12 +16,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     MainViewController *mainViewController = [[MainViewController alloc] init];
-    mainViewController.navigationItem.title = @"Yelper";
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     
     
-    self.window.rootViewController = navigationController;
+    //UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    
+    
+    self.window.rootViewController = mainViewController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

@@ -7,10 +7,14 @@
 //
 
 #import "FiltersViewController.h"
+#import "FilterTableViewCell.h"
+
 
 @interface FiltersViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)onSearch:(id)sender;
+- (IBAction)onCancel:(id)sender;
 
 @end
 
@@ -31,8 +35,24 @@
     // Do any additional setup after loading the view from its nib.
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    // register our custom cells
+    UINib *filterCellNib = [UINib nibWithNibName:@"FilterTableViewCell" bundle:nil];
+    [self.tableView registerNib:filterCellNib forCellReuseIdentifier:@"FilterCell"];
+
 
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"FilterCell";
+    
+    FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    //filterCell = @"Test name";
+    
+    return filterCell;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 10;
@@ -49,4 +69,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)onSearch:(id)sender {
+    NSLog(@"dismiss and search");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)onCancel:(id)sender {
+    NSLog(@"dismiss and cancel");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
