@@ -21,9 +21,20 @@
     // Initialization code
 }
 
+- (void)setName:(NSString *)name {
+    self.nameLabel.text = name;
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    NSLog(@"highlighted cell");
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    
+    NSLog(@"selected cell");
 
     // Configure the view for the selected state
 }

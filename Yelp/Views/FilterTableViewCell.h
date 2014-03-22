@@ -10,4 +10,6 @@
 
 @interface FilterTableViewCell : UITableViewCell
 
+@property (nonatomic,strong) NSString *name;
+
 @end
