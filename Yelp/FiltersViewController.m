@@ -17,6 +17,8 @@
 
 @property (nonatomic,assign) BOOL expanded;
 
+// TODO: enum all types.
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (IBAction)onSearch:(id)sender;
 - (IBAction)onCancel:(id)sender;
@@ -49,17 +51,23 @@
         @{
             @"name":@"Distance",
             @"type":@"expandable",
-            @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"]
+            @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"],
+            @"expanded":@NO,
+            @"selectedItem":@2,
         },
         @{
             @"name":@"Sort By",
             @"type":@"expandable",
-            @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"]
+            @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"],
+            @"expanded":@NO,
+            @"selectedItem":@0,
         },
         @{
           @"name":@"General Features",
           @"type":@"expandable",
-          @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"]
+          @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"],
+          @"expanded":@NO,
+          @"selectedItem":@0
         },
          nil
    ];
@@ -78,7 +86,6 @@
     
     // create our categories
     [self setupOptions];
-
 
 }
 
@@ -100,17 +107,17 @@
     NSLog(@"numberOfSectionsInTableView:%d",[self.categories count]);
     
     return [self.categories count];
-    /*
-    if (self.expanded) {
-        return 2;
-    } else {
-        return 1;
-    }*/
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSDictionary *category = [self.categories objectAtIndex:section];
+    
     NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
+    
+    if (category[@"type"]=@"expandable") {
+        NSLog(@"Expandable type");
+    }
+    
     return [category[@"list"] count];
 }
 
@@ -142,7 +149,6 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     NSDictionary *category = [self.categories objectAtIndex:section];
-    
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,40)];
     headerView.backgroundColor = [UIColor redColor];
