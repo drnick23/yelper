@@ -9,13 +9,23 @@
 #import "FiltersViewController.h"
 #import "FilterTableViewCell.h"
 
+enum FilterCategoryListTypes {
+    kTypeSegmented,
+    kTypeSwitches,
+    kTypeExpandable
+};
+
+typedef enum FilterCategoryListTypes FilterCategoryListTypes;
+
 
 @interface FiltersViewController () <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) NSMutableArray *categories;
-@property (nonatomic,strong) NSArray *options; // of NSDictionary
+@property (nonatomic,strong) NSArray *categories;
+@property (nonatomic,strong) NSMutableDictionary *options; // of NSDictionary
 
 @property (nonatomic,assign) BOOL expanded;
+
+@property (nonatomic,strong) NSMutableDictionary *expandedCategories;
 
 // TODO: enum all types.
 
@@ -37,39 +47,41 @@
 }
 
 - (void)setupOptions {
-    self.categories = [NSMutableArray arrayWithObjects:
+    self.options = [[NSMutableDictionary alloc] initWithCapacity:20];
+    self.expandedCategories = [[NSMutableDictionary alloc] initWithCapacity:4];
+    
+    self.categories = @[
         @{
             @"name":@"Price",
-            @"type":@"segmented",
+            @"type":@(kTypeSegmented),
             @"list":@[@"$",@"$$",@"$$$",@"$$$$"]
         },
         @{
             @"name":@"Most Popular",
-            @"type":@"switches",
+            @"type":@(kTypeSwitches),
             @"list":@[@"Open Now",@"Hot & New",@"Offering a Deal",@"Delivery"]
         },
         @{
             @"name":@"Distance",
-            @"type":@"expandable",
+            @"type":@(kTypeExpandable),
             @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"],
             @"expanded":@NO,
             @"selectedItem":@2,
         },
         @{
             @"name":@"Sort By",
-            @"type":@"expandable",
+            @"type":@(kTypeExpandable),
             @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"],
             @"expanded":@NO,
             @"selectedItem":@0,
         },
         @{
           @"name":@"General Features",
-          @"type":@"expandable",
+          @"type":@(kTypeSwitches),
           @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"],
           @"expanded":@NO,
           @"selectedItem":@0
-        },
-         nil
+        }
    ];
 }
 
@@ -113,9 +125,20 @@
     NSDictionary *category = [self.categories objectAtIndex:section];
     
     NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
+    NSLog(@"Category type is: %@", category[@"type"]);
     
-    if (category[@"type"]=@"expandable") {
-        NSLog(@"Expandable type");
+    if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
+        
+        NSString *keyName = category[@"name"];
+        
+        if ([self.expandedCategories[keyName] isEqualToValue:@YES]) {
+            NSLog(@"Expandable type expanded");
+            return [category[@"list"] count];
+        } else {
+            NSLog(@"Expandable type not expanded, count is 1");
+            return 1;
+        }
+        
     }
     
     return [category[@"list"] count];
@@ -124,9 +147,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // this method must be very fast for smooth scrolling.
     if (self.expanded) {
-        return 300;
+        return 50;
     } else {
-        return 150;
+        return 50;
     }
 
 }
@@ -135,6 +158,44 @@
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
+    NSMutableDictionary *category = [self.categories objectAtIndex:indexPath.section];
+    
+    if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
+        
+        NSString *keyName = category[@"name"];
+        
+        NSLog(@"checking key value at %@ to be %@",keyName,self.expandedCategories[keyName]);
+        // check our dictionary if this expandable class is expanded or not
+        if ([self.expandedCategories[keyName] isEqualToValue:@YES]) {
+            NSLog(@"Already expanded, must compress");
+            [self.expandedCategories setObject:@(NO) forKey:keyName];
+            //self.options[keyName] = !self.options[keyName];
+        } else {
+            NSLog(@"Not expanded, must expand!");
+            [self.expandedCategories setObject:@(YES) forKey:keyName];
+        }
+
+        
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+    
+    }
+        /*
+        if ([category[@"expanded"] isEqualToValue:@YES]) {
+            NSLog(@"Must compress expandable");
+            [category setObject:@(NO) forKey:@"expanded"];
+        } else {
+            NSLog(@"Most expand section");
+            [category setObject:@(YES) forKey:@"expanded"];
+        }*/
+        //[self.tableView reloadData];
+        /*[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];*/
+        
+    
+    
+
+    
+    /*
     self.expanded = !self.expanded;
     //[self.tableView reloadData];
     
@@ -143,8 +204,8 @@
     } else {
         [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
     }
-    
-   }
+    */
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
