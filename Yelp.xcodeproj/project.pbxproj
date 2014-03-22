@@ -10,9 +10,10 @@
 		0126798418DC90FD002DB785 /* YelpResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0126798218DC90FD002DB785 /* YelpResultTableViewCell.m */; };
 		0126798518DC90FD002DB785 /* YelpResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0126798318DC90FD002DB785 /* YelpResultTableViewCell.xib */; };
 		0126798C18DC9525002DB785 /* YelpResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0126798B18DC9525002DB785 /* YelpResult.m */; };
+		0126799018DDC54C002DB785 /* FilterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0126798E18DDC54C002DB785 /* FilterTableViewCell.m */; };
+		0126799118DDC54C002DB785 /* FilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0126798F18DDC54C002DB785 /* FilterTableViewCell.xib */; };
 		017CC8AA18DDC3370064CFD6 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 017CC8A818DDC3370064CFD6 /* FiltersViewController.m */; };
 		017CC8AB18DDC3370064CFD6 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017CC8A918DDC3370064CFD6 /* FiltersViewController.xib */; };
-		017CC8AE18DDC4160064CFD6 /* FilterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 017CC8AD18DDC4160064CFD6 /* FilterTableViewCell.m */; };
 		420474F618DC299500E88E07 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F518DC299500E88E07 /* YelpClient.m */; };
 		420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F918DC2B2100E88E07 /* MainViewController.m */; };
 		420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420474FA18DC2B2100E88E07 /* MainViewController.xib */; };
@@ -47,11 +48,12 @@
 		0126798318DC90FD002DB785 /* YelpResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YelpResultTableViewCell.xib; path = Views/YelpResultTableViewCell.xib; sourceTree = "<group>"; };
 		0126798A18DC9525002DB785 /* YelpResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YelpResult.h; path = Models/YelpResult.h; sourceTree = "<group>"; };
 		0126798B18DC9525002DB785 /* YelpResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YelpResult.m; path = Models/YelpResult.m; sourceTree = "<group>"; };
+		0126798D18DDC54C002DB785 /* FilterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterTableViewCell.h; path = Views/FilterTableViewCell.h; sourceTree = "<group>"; };
+		0126798E18DDC54C002DB785 /* FilterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterTableViewCell.m; path = Views/FilterTableViewCell.m; sourceTree = "<group>"; };
+		0126798F18DDC54C002DB785 /* FilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterTableViewCell.xib; path = Views/FilterTableViewCell.xib; sourceTree = "<group>"; };
 		017CC8A718DDC3370064CFD6 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		017CC8A818DDC3370064CFD6 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		017CC8A918DDC3370064CFD6 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
-		017CC8AC18DDC4160064CFD6 /* FilterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterTableViewCell.h; path = Views/FilterTableViewCell.h; sourceTree = "<group>"; };
-		017CC8AD18DDC4160064CFD6 /* FilterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterTableViewCell.m; path = Views/FilterTableViewCell.m; sourceTree = "<group>"; };
 		420474F418DC299500E88E07 /* YelpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
 		420474F518DC299500E88E07 /* YelpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
 		420474F818DC2B2100E88E07 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -108,8 +110,9 @@
 				0126798118DC90FD002DB785 /* YelpResultTableViewCell.h */,
 				0126798218DC90FD002DB785 /* YelpResultTableViewCell.m */,
 				0126798318DC90FD002DB785 /* YelpResultTableViewCell.xib */,
-				017CC8AC18DDC4160064CFD6 /* FilterTableViewCell.h */,
-				017CC8AD18DDC4160064CFD6 /* FilterTableViewCell.m */,
+				0126798D18DDC54C002DB785 /* FilterTableViewCell.h */,
+				0126798E18DDC54C002DB785 /* FilterTableViewCell.m */,
+				0126798F18DDC54C002DB785 /* FilterTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0126798518DC90FD002DB785 /* YelpResultTableViewCell.xib in Resources */,
+				0126799118DDC54C002DB785 /* FilterTableViewCell.xib in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
 				017CC8AB18DDC3370064CFD6 /* FiltersViewController.xib in Resources */,
 				420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */,
@@ -355,7 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				017CC8AA18DDC3370064CFD6 /* FiltersViewController.m in Sources */,
-				017CC8AE18DDC4160064CFD6 /* FilterTableViewCell.m in Sources */,
+				0126799018DDC54C002DB785 /* FilterTableViewCell.m in Sources */,
 				0126798C18DC9525002DB785 /* YelpResult.m in Sources */,
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,

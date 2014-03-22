@@ -8,15 +8,18 @@
 
 #import "FilterTableViewCell.h"
 
+@interface FilterTableViewCell()
+
+@property (weak, nonatomic) IBOutlet UIView *nameLabel;
+@property (weak, nonatomic) IBOutlet UIView *switchView;
+
+@end
+
 @implementation FilterTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (void)awakeFromNib
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
