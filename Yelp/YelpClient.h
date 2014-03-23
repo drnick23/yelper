@@ -12,9 +12,9 @@
 @interface YelpClient : BDBOAuth1RequestOperationManager
 
 
-@property (nonatomic,assign) NSUInteger sortBy;
+@property (nonatomic,assign) NSNumber *sortBy;
 @property (nonatomic,strong) NSString *categoryFilter;
-@property (nonatomic,assign) NSUInteger radiusFilter;
+@property (nonatomic,assign) NSNumber *radiusFilter;
 @property (nonatomic,assign) BOOL dealsFilter;
 
 - (id)initWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret accessToken:(NSString *)accessToken accessSecret:(NSString *)accessSecret;

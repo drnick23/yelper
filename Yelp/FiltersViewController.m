@@ -50,21 +50,6 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 - (void)setupOptions {
     self.options = [[NSMutableDictionary alloc] initWithCapacity:20];
     self.expandedCategories = [[NSMutableDictionary alloc] initWithCapacity:4];
-    NSDictionary *yelpCategories = @{
-                            @"All":@"",
-                            @"Active Life":@"active",
-                            @"Arts & Entertainment":@"arts",
-                            @"Automotive":@"auto",
-                            @"Beauty & Spas":@"beautysvc",
-                            @"Education":@"education",
-                            @"Event Planning & Services":@"eventservices",
-                            @"Financial Services":@"financialservices",
-                            @"Food":@"food",
-                            @"Health & Medical":@"health",
-                            @"Home Services":@"homeservices",
-                            @"Hotels & Travel":@"hotelstravel",
-                            @"Local Flavor":@"localflavor"
-                            };
     
     self.categories = @[
         @{
@@ -85,7 +70,7 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
         @{
             @"name":@"Sort By",
             @"type":@(kTypeExpandable),
-            @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"],
+            @"list":@[@"Best Match",@"Distance",@"Rating"],
         }
    ];
 }
@@ -272,6 +257,8 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 - (IBAction)onSearch:(id)sender {
     NSLog(@"dismiss and search");
     [self dismissViewControllerAnimated:YES completion:nil];
+    // TODO: call main view controllers search functions...
+    
 }
 
 - (IBAction)onCancel:(id)sender {
