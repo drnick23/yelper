@@ -16,11 +16,11 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    /*MainViewController *mainViewController = [[MainViewController alloc] init];
-    self.window.rootViewController = mainViewController;*/
+    MainViewController *mainViewController = [[MainViewController alloc] init];
+    self.window.rootViewController = mainViewController;
     
-    FiltersViewController *filtersViewController = [[FiltersViewController alloc] init];
-    self.window.rootViewController = filtersViewController;
+   /* FiltersViewController *filtersViewController = [[FiltersViewController alloc] init];
+    self.window.rootViewController = filtersViewController;*/
     
     
     //UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
