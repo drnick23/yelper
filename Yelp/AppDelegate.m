@@ -19,9 +19,9 @@
     MainViewController *mainViewController = [[MainViewController alloc] init];
     self.window.rootViewController = mainViewController;
     
-   /* FiltersViewController *filtersViewController = [[FiltersViewController alloc] init];
-    self.window.rootViewController = filtersViewController;*/
-    
+    /*FiltersViewController *filtersViewController = [[FiltersViewController alloc] init];
+    self.window.rootViewController = filtersViewController;
+    */
     
     //UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     

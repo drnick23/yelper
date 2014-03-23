@@ -13,7 +13,7 @@
 -(id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        NSLog(@"should init result with dictionary object %@",nil);//dictionary);
+        //NSLog(@"should init result with dictionary object %@",nil);//dictionary);
         
         self.name = dictionary[@"name"];
         self.snippetText = dictionary[@"snippet_text"];

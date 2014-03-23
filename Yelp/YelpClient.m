@@ -25,11 +25,9 @@
     // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
     NSDictionary *parameters = @{@"term": term, @"location" : @"San Francisco"};
     
-    //NSArray *response = [self GET:@"search" parameters:parameters success:success failure:failure];
-    
-    //return response;
-    
+    NSLog(@"Should search with radius:%lu sortBy:%d category:%@ deals:%d",(unsigned long)self.radiusFilter, self.sortBy, self.categoryFilter, self.dealsFilter);
     return [self GET:@"search" parameters:parameters success:success failure:failure];
 }
+
 
 @end

@@ -24,7 +24,7 @@
     self = [super init];
     if (self) {
     
-        NSLog(@"should init with response");
+        //NSLog(@"should init with response");
         
         if([[response objectForKey:@"businesses"] isKindOfClass:[NSArray class]]) {
             

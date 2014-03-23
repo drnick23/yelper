@@ -59,6 +59,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     NSLog(@"doSearch %@",searchText);
     
+    NSLog(@"radius search %@",[defaults objectForKey:@"Distance"]);
+    NSLog(@"sort by %@",[defaults objectForKey:@"Sort By"]);
+    NSLog(@"category %@",[defaults objectForKey:@"Categories"]);
+    
     [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
         self.results = [[YelpResultList alloc] initWithResponse:response];
         [self.tableView reloadData];
@@ -114,16 +118,16 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"row count %d", [self.results count]);
+    //NSLog(@"row count %d", [self.results count]);
     return [self.results count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Cell for row %d",indexPath.row);
+    //NSLog(@"Cell for row %d",indexPath.row);
     static NSString *CellIdentifier = @"YelpResultCell";
     
     YelpResult *result = [self.results get:indexPath.row];
-    NSLog(@"got result for %d",indexPath.row);
+    //NSLog(@"got result for %d",indexPath.row);
     YelpResultTableViewCell *resultCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     resultCell.result = result;

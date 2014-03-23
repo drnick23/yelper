@@ -12,4 +12,6 @@
 
 @property (nonatomic,strong) NSString *name;
 
+-(void) setSelection:(int)selectionState;
+
 @end

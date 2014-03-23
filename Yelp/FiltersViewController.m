@@ -12,7 +12,8 @@
 enum FilterCategoryListTypes {
     kTypeSegmented,
     kTypeSwitches,
-    kTypeExpandable
+    kTypeExpandable,
+    kTypeList
 };
 
 typedef enum FilterCategoryListTypes FilterCategoryListTypes;
@@ -49,38 +50,42 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 - (void)setupOptions {
     self.options = [[NSMutableDictionary alloc] initWithCapacity:20];
     self.expandedCategories = [[NSMutableDictionary alloc] initWithCapacity:4];
+    NSDictionary *yelpCategories = @{
+                            @"All":@"",
+                            @"Active Life":@"active",
+                            @"Arts & Entertainment":@"arts",
+                            @"Automotive":@"auto",
+                            @"Beauty & Spas":@"beautysvc",
+                            @"Education":@"education",
+                            @"Event Planning & Services":@"eventservices",
+                            @"Financial Services":@"financialservices",
+                            @"Food":@"food",
+                            @"Health & Medical":@"health",
+                            @"Home Services":@"homeservices",
+                            @"Hotels & Travel":@"hotelstravel",
+                            @"Local Flavor":@"localflavor"
+                            };
     
     self.categories = @[
         @{
-            @"name":@"Price",
-            @"type":@(kTypeSegmented),
-            @"list":@[@"$",@"$$",@"$$$",@"$$$$"]
-        },
-        @{
             @"name":@"Most Popular",
             @"type":@(kTypeSwitches),
-            @"list":@[@"Open Now",@"Hot & New",@"Offering a Deal",@"Delivery"]
+            @"list":@[@"Offering a Deal"]
         },
         @{
             @"name":@"Distance",
             @"type":@(kTypeExpandable),
             @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"],
-            @"expanded":@NO,
-            @"selectedItem":@2,
+        },
+        @{
+            @"name":@"Categories",
+            @"type":@(kTypeExpandable),
+            @"list":@[@"All",@"Active Life",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services",@"Financial Services",@"Food"],
         },
         @{
             @"name":@"Sort By",
             @"type":@(kTypeExpandable),
             @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"],
-            @"expanded":@NO,
-            @"selectedItem":@0,
-        },
-        @{
-          @"name":@"General Features",
-          @"type":@(kTypeSwitches),
-          @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"],
-          @"expanded":@NO,
-          @"selectedItem":@0
         }
    ];
 }
@@ -102,12 +107,41 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     NSDictionary *category = [self.categories objectAtIndex:indexPath.section];
-    NSString *itemName = [category[@"list"] objectAtIndex:indexPath.row];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     static NSString *CellIdentifier = @"FilterCell";
-    
     FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    NSString *itemName = [category[@"list"] objectAtIndex:indexPath.row];
+    
+    NSString *keyName = category[@"name"];
+    NSString *selectedName = [defaults objectForKey:keyName];
+    
+    if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
+        if ([self.expandedCategories[keyName] isEqualToValue:@NO]) {
+            // if we're not expanded, override name is the saved default value
+            NSLog(@"category %@ not expanded so getting NSDefaults saved value %@",category[@"name"],[defaults objectForKey:keyName]);
+            itemName = selectedName;
+            NSLog(@"setting state to 1");
+            [filterCell setSelection:2];
+        }
+        else {
+            NSLog(@"Compare %@ and %@",keyName,selectedName);
+            if ([itemName isEqualToString:selectedName]) {
+                [filterCell setSelection:1];
+            } else {
+                [filterCell setSelection:0];
+            }
+        }
+    }
+
+    
+   
+    
+    
+    
     filterCell.name = itemName;
     //filterCell = @"Test name";
 
@@ -124,8 +158,8 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSDictionary *category = [self.categories objectAtIndex:section];
     
-    NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
-    NSLog(@"Category type is: %@", category[@"type"]);
+    //NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
+    //NSLog(@"Category type is: %@", category[@"type"]);
     
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
@@ -155,7 +189,8 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     NSMutableDictionary *category = [self.categories objectAtIndex:indexPath.section];
@@ -169,6 +204,8 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
         if ([self.expandedCategories[keyName] isEqualToValue:@YES]) {
             NSLog(@"Already expanded, must compress");
             [self.expandedCategories setObject:@(NO) forKey:keyName];
+            NSLog(@"setting key:%@ to row:%d object:%@",keyName,indexPath.row,[category[@"list"] objectAtIndex:indexPath.row]);
+            [defaults setObject:[category[@"list"] objectAtIndex:indexPath.row] forKey:keyName];
             //self.options[keyName] = !self.options[keyName];
         } else {
             NSLog(@"Not expanded, must expand!");
@@ -211,11 +248,12 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
     
     NSDictionary *category = [self.categories objectAtIndex:section];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,40)];
-    headerView.backgroundColor = [UIColor redColor];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,30)];
+    headerView.backgroundColor = [UIColor grayColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10,10,300,20)];
     label.text = category[@"name"];
-    
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:12.0];
     [headerView addSubview:label];
     return headerView;
 }
