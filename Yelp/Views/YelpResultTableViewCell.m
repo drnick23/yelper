@@ -15,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ratingImageView;
 @property (weak, nonatomic) IBOutlet UILabel *reviewCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *displayAddressLabel;
-@property (weak, nonatomic) IBOutlet UILabel *snippetTextLabel;
 
 
 @end
@@ -55,8 +54,6 @@
     [self.ratingImageView setImageWithURL:result.ratingImgURL placeholderImage:nil];
     
     //self.displayAddressLabel.text = result.displayAddress;
-    self.snippetTextLabel.text = result.snippetText;
-    
     
 }
 
