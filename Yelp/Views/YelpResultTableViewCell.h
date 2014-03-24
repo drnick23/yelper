@@ -13,4 +13,6 @@
 
 @property (nonatomic, weak) YelpResult *result;
 
+-(CGFloat)myHeightForResult: (YelpResult *)result;
+
 @end

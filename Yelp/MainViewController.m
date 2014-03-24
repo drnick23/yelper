@@ -27,6 +27,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic,strong) YelpResultList *results;
 @property (nonatomic,strong) NSString *searchText;
 
+@property (nonatomic,strong) YelpResultTableViewCell *prototypeCell;
+
 @end
 
 @implementation MainViewController
@@ -170,17 +172,35 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return resultCell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (YelpResultTableViewCell *)prototypeCell
+{
+    if (!_prototypeCell) {
+        _prototypeCell = [self.tableView dequeueReusableCellWithIdentifier:@"YelpResultCell"];
+    }
+    return _prototypeCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Data for the cell, e.g. text for label
+    YelpResult *result = [self.results get:indexPath.row];
+    
+    // Prototype knows how to calculate its height for the given data
+    return [self.prototypeCell myHeightForResult:result];
+    
+}
+
+/*- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100.0f;
-    /*
+ 
     YelpResult *result = [self.results get:indexPath.row];
     
     CGSize textSize = [result.name sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:CGSizeMake(240, 1000) lineBreakMode:UILineBreakModeCharacterWrap];
     
     float height = MIN(textSize.height+100.0f, 150.0f); //Some fix height is returned if height is small or change it to MAX(textSize.height, 150.0f); // whatever best fits for you
     
-    return height;*/
-}
+    return height;
+}*/
 
 
 - (void)didReceiveMemoryWarning

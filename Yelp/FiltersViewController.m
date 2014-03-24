@@ -12,8 +12,7 @@
 enum FilterCategoryListTypes {
     kTypeSegmented,
     kTypeSwitches,
-    kTypeExpandable,
-    kTypeList
+    kTypeExpandable
 };
 
 typedef enum FilterCategoryListTypes FilterCategoryListTypes;
@@ -63,14 +62,14 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
             @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"],
         },
         @{
-            @"name":@"Categories",
-            @"type":@(kTypeExpandable),
-            @"list":@[@"All",@"Active Life",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services",@"Financial Services",@"Food"],
-        },
-        @{
             @"name":@"Sort By",
             @"type":@(kTypeExpandable),
             @"list":@[@"Best Match",@"Distance",@"Rating"],
+        },
+        @{
+            @"name":@"Categories",
+            @"type":@(kTypeSwitches),
+            @"list":@[@"Active Life",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services",@"Financial Services",@"Food"],
         }
    ];
 }
@@ -120,14 +119,14 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
                 [filterCell setSelection:0];
             }
         }
+        //filterCell.isSwitch = NO;
+    } else {
+        //filterCell.isSwitch = YES;
     }
-
-    
-   
-    
     
     
     filterCell.name = itemName;
+    
     //filterCell = @"Test name";
 
     return filterCell;

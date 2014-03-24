@@ -23,7 +23,7 @@
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="20"/>
+                                <integer key="value" value="5"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -127,6 +127,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="categoriesLabel" destination="eZV-06-qwH" id="a2m-o3-irz"/>
                 <outlet property="displayAddressLabel" destination="Ayr-7v-vhX" id="VOG-Zp-Duy"/>
                 <outlet property="mainImageView" destination="UKy-Nc-JY4" id="aOn-ww-KHM"/>
                 <outlet property="nameLabel" destination="n4Z-rA-88J" id="lIO-hy-lfY"/>

@@ -10,9 +10,7 @@
 
 @interface FilterTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *buttonSwitch;
 @property (weak, nonatomic) IBOutlet UIImageView *selectionIcon;
-
 @end
 
 @implementation FilterTableViewCell
@@ -25,6 +23,7 @@
 - (void)setName:(NSString *)name {
     self.nameLabel.text = name;
 }
+
 
 - (void)setSelection:(int)selectionState {
     NSLog(@"selectionState %d",selectionState);
