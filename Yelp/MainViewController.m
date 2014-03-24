@@ -16,7 +16,7 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController () <UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface MainViewController () <FiltersViewControllerDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -99,6 +99,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
         self.results = [[YelpResultList alloc] initWithResponse:response];
+        NSLog(@"got search results back");
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
@@ -191,10 +192,19 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (IBAction)onFilter:(id)sender {
     NSLog(@"Go ahead and setup the filters view");
     
-    UIViewController *filtersView = [[FiltersViewController alloc] init];
+    FiltersViewController *filtersView = [[FiltersViewController alloc] init];
     filtersView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    filtersView.delegate = self;
     
     [self presentViewController:filtersView animated:YES completion:nil];
+}
+
+-(void)addItemViewController:(FiltersViewController *)controller didSearch:(BOOL)doSearch {
+    NSLog(@"Got call back from filters model with %hhd",doSearch);
+    if (doSearch) {
+        [self doSearch];
+    }
     
 }
+
 @end

@@ -258,7 +258,8 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
     NSLog(@"dismiss and search");
     [self dismissViewControllerAnimated:YES completion:nil];
     // TODO: call main view controllers search functions...
-    
+    // TODO: pass back new parameters to save from main function instead of here...
+    [self.delegate addItemViewController:self didSearch:YES];
 }
 
 - (IBAction)onCancel:(id)sender {

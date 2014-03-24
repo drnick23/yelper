@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class FiltersViewController;
+
+@protocol FiltersViewControllerDelegate <NSObject>
+-(void) addItemViewController:(FiltersViewController *)controller didSearch:(BOOL)doSearch;
+@end
+
 @interface FiltersViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,weak) id <FiltersViewControllerDelegate> delegate;
 
 @end
