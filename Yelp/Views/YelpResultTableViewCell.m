@@ -54,6 +54,13 @@
     [self.mainImageView setImageWithURL:result.mainImageURL placeholderImage:placeholderImage];
     [self.ratingImageView setImageWithURL:result.ratingImgURL placeholderImage:nil];
     
+    self.displayAddressLabel.text = result.displayAddress;
+    /*if (result.displayAddress) {
+        self.displayAddressLabel.text = result.displayAddress;
+    } else {
+        self.displayAddressLabel.text = @"";
+    }*/
+    
     //self.displayAddressLabel.text = result.displayAddress;
     
 }

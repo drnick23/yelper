@@ -16,7 +16,6 @@
 		017CC8AB18DDC3370064CFD6 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017CC8A918DDC3370064CFD6 /* FiltersViewController.xib */; };
 		01E2C64F18DF26E70074477A /* YelpResultList.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C64E18DF26E70074477A /* YelpResultList.m */; };
 		01E2C65218E1D9430074477A /* FilterOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C65118E1D9430074477A /* FilterOptions.m */; };
-		01E2C65518E1FAED0074477A /* FilterOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C65418E1FAED0074477A /* FilterOption.m */; };
 		01E2C65918E20A710074477A /* SeeAllTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C65718E20A710074477A /* SeeAllTableViewCell.m */; };
 		01E2C65A18E20A710074477A /* SeeAllTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2C65818E20A710074477A /* SeeAllTableViewCell.xib */; };
 		420474F618DC299500E88E07 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F518DC299500E88E07 /* YelpClient.m */; };
@@ -63,8 +62,6 @@
 		01E2C64E18DF26E70074477A /* YelpResultList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YelpResultList.m; path = Models/YelpResultList.m; sourceTree = "<group>"; };
 		01E2C65018E1D9430074477A /* FilterOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterOptions.h; path = Models/FilterOptions.h; sourceTree = "<group>"; };
 		01E2C65118E1D9430074477A /* FilterOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterOptions.m; path = Models/FilterOptions.m; sourceTree = "<group>"; };
-		01E2C65318E1FAED0074477A /* FilterOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterOption.h; path = Models/FilterOption.h; sourceTree = "<group>"; };
-		01E2C65418E1FAED0074477A /* FilterOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterOption.m; path = Models/FilterOption.m; sourceTree = "<group>"; };
 		01E2C65618E20A710074477A /* SeeAllTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeeAllTableViewCell.h; path = Views/SeeAllTableViewCell.h; sourceTree = "<group>"; };
 		01E2C65718E20A710074477A /* SeeAllTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeeAllTableViewCell.m; path = Views/SeeAllTableViewCell.m; sourceTree = "<group>"; };
 		01E2C65818E20A710074477A /* SeeAllTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SeeAllTableViewCell.xib; path = Views/SeeAllTableViewCell.xib; sourceTree = "<group>"; };
@@ -143,8 +140,6 @@
 				01E2C64E18DF26E70074477A /* YelpResultList.m */,
 				01E2C65018E1D9430074477A /* FilterOptions.h */,
 				01E2C65118E1D9430074477A /* FilterOptions.m */,
-				01E2C65318E1FAED0074477A /* FilterOption.h */,
-				01E2C65418E1FAED0074477A /* FilterOption.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -392,7 +387,6 @@
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				01E2C64F18DF26E70074477A /* YelpResultList.m in Sources */,
 				01E2C65218E1D9430074477A /* FilterOptions.m in Sources */,
-				01E2C65518E1FAED0074477A /* FilterOption.m in Sources */,
 				0126798418DC90FD002DB785 /* YelpResultTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

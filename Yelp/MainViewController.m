@@ -58,45 +58,11 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 // perform search with all saved settings/filters
 - (void)doSearch {
-    NSDictionary *mapYelpCategories = @{
-                                     @"All":@"",
-                                     @"Active Life":@"active",
-                                     @"Arts & Entertainment":@"arts",
-                                     @"Automotive":@"auto",
-                                     @"Beauty & Spas":@"beautysvc",
-                                     @"Education":@"education",
-                                     @"Event Planning & Services":@"eventservices",
-                                     @"Financial Services":@"financialservices",
-                                     @"Food":@"food",
-                                     @"Health & Medical":@"health",
-                                     @"Home Services":@"homeservices",
-                                     @"Hotels & Travel":@"hotelstravel",
-                                     @"Local Flavor":@"localflavor"
-                                     };
-    
-    NSDictionary *mapDistanceToRadius = @{
-          @"Auto":@0,
-          @"2 blocks":@200,
-          @"6 blocks":@600,
-          @"1 mile":@1600,
-          @"5 miles":@10000
-    };
-    
-    NSDictionary *mapSortBy = @{
-        @"Best Match":@0,
-        @"Distance":@1,
-        @"Rating":@2
-    };
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     NSString *searchText = [defaults objectForKey:@"searchText"];
     
     NSLog(@"doSearch %@",searchText);
     
-    self.client.categoryFilter = [mapYelpCategories objectForKey:[defaults objectForKey:@"Categories"]];
-    self.client.radiusFilter = [mapDistanceToRadius objectForKey:[defaults objectForKey:@"Distance"]];
-    self.client.sortBy = [mapSortBy objectForKey:[defaults objectForKey:@"Sort By"]];
     
     NSLog(@"radius search %@",[defaults objectForKey:@"Distance"]);
     NSLog(@"sort by %@",[defaults objectForKey:@"Sort By"]);
@@ -109,8 +75,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
     }];*/
+    NSMutableDictionary *parameters = [self.filterOptions.searchParameters mutableCopy];
+    [parameters setObject:searchText forKey:@"term"];
     
-    [self.client searchWithParameters:self.filterOptions.searchParameters success:^(AFHTTPRequestOperation *operation, id response) {
+    [self.client searchWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id response) {
         self.results = [[YelpResultList alloc] initWithResponse:response];
         NSLog(@"got search results back");
         [self.tableView reloadData];

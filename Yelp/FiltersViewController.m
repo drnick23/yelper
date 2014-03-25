@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (IBAction)onSearch:(id)sender;
 - (IBAction)onCancel:(id)sender;
-
 @end
 
 @implementation FiltersViewController
@@ -212,10 +211,6 @@
             [self.filterOptions selectedRowAtIndexPath:indexPath];
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
-
-        
-       
-        
     }
         /*
         if ([category[@"expanded"] isEqualToValue:@YES]) {

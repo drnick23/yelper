@@ -65,7 +65,7 @@
                                               @"Auto":@0,
                                               @"2 blocks":@200,
                                               @"6 blocks":@600,
-                                              @"1 mile":@1600,
+                                              @"1 mile":@(1600),
                                               @"5 miles":@10000
                                               };
         
@@ -95,9 +95,34 @@
 
 -(NSDictionary *)searchParameters {
     // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
-    NSString *searchText = @"thai";
+    
     NSLog(@"returning search parameters");
-    NSDictionary *parameters = @{@"term": searchText, @"location" : @"San Francisco"};
+    NSMutableDictionary *parameters = [@{@"location" : @"San Francisco"} mutableCopy];
+    
+    NSNumber *radiusFilter = [self.mapDistanceToRadius objectForKey:[self.selections objectForKey:@"Distance"][0]];
+    if (radiusFilter) {
+        [parameters setObject:radiusFilter forKey:@"radius_filter"];
+    }
+    
+    NSNumber *sortBy = [self.mapSortBy objectForKey:[self.selections objectForKey:@"Sort By"][0]];
+    if (sortBy) {
+        [parameters setObject:sortBy forKey:@"sort"];
+    }
+    
+    NSArray *categories = [self.selections objectForKey:@"Categories"];
+    NSMutableString *categoryFilter;
+    if ([categories count]>0) {
+        // traverse array...
+        categoryFilter = [NSMutableString string];
+        for (NSArray* arrayItem in categories) {
+            //NSLog(@"Cast item %@",castItem[@"name"]);
+            [categoryFilter appendFormat:@"%@,",self.mapYelpCategories[arrayItem]];
+        }
+    }
+    if (categoryFilter) {
+        [parameters setObject:[categoryFilter substringToIndex:[categoryFilter length]-1] forKey:@"category_filter"];
+    }
+    
     return parameters;
 }
 
