@@ -66,7 +66,7 @@
     }
     [self setNeedsLayout];
     [self layoutIfNeeded];
-    NSLog(@"label width for %@ is %f", text, label.bounds.size.width);
+    //NSLog(@"label width for %@ is %f", text, label.bounds.size.width);
     CGSize maximumLabelSize = CGSizeMake(label.bounds.size.width,1000.0);
     CGSize expectedSize = [label sizeThatFits:maximumLabelSize];
     return expectedSize.height;
@@ -90,7 +90,7 @@
     
     // and our padding for cell height that we might adjust manually.
     height += 30.0f;
-    NSLog(@"height for %@ is %f",result.name,height);
+   // NSLog(@"height for %@ is %f",result.name,height);
     return height;
 }
 

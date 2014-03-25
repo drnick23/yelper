@@ -9,19 +9,9 @@
 #import "FiltersViewController.h"
 #import "FilterTableViewCell.h"
 
-enum FilterCategoryListTypes {
-    kTypeSegmented,
-    kTypeSwitches,
-    kTypeExpandable
-};
-
-typedef enum FilterCategoryListTypes FilterCategoryListTypes;
-
-
 @interface FiltersViewController () <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) NSArray *categories;
-@property (nonatomic,strong) NSMutableDictionary *options; // of NSDictionary
+@property (nonatomic,strong) FilterOptions *filterOptions; // of NSDictionary
 
 @property (nonatomic,assign) BOOL expanded;
 
@@ -46,32 +36,19 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
     return self;
 }
 
-- (void)setupOptions {
-    self.options = [[NSMutableDictionary alloc] initWithCapacity:20];
-    self.expandedCategories = [[NSMutableDictionary alloc] initWithCapacity:4];
-    
-    self.categories = @[
-        @{
-            @"name":@"Most Popular",
-            @"type":@(kTypeSwitches),
-            @"list":@[@"Offering a Deal"]
-        },
-        @{
-            @"name":@"Distance",
-            @"type":@(kTypeExpandable),
-            @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"],
-        },
-        @{
-            @"name":@"Sort By",
-            @"type":@(kTypeExpandable),
-            @"list":@[@"Best Match",@"Distance",@"Rating"],
-        },
-        @{
-            @"name":@"Categories",
-            @"type":@(kTypeSwitches),
-            @"list":@[@"Active Life",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services",@"Financial Services",@"Food"],
+-(id)initWithOptions:(FilterOptions *)options {
+    self = [super init];
+    if (self) {
+        if (!options) {
+            self.filterOptions = [[FilterOptions alloc] init];
         }
-   ];
+        [self setupOptions];
+    }
+    return self;
+}
+
+- (void)setupOptions {
+    self.expandedCategories = [[NSMutableDictionary alloc] initWithCapacity:4];
 }
 
 - (void)viewDidLoad
@@ -84,66 +61,67 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
     // register our custom cells
     UINib *filterCellNib = [UINib nibWithNibName:@"FilterTableViewCell" bundle:nil];
     [self.tableView registerNib:filterCellNib forCellReuseIdentifier:@"FilterCell"];
-    
-    // create our categories
-    [self setupOptions];
 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSDictionary *category = [self.categories objectAtIndex:indexPath.section];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     static NSString *CellIdentifier = @"FilterCell";
     FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    NSDictionary *category = [self.filterOptions.sections objectAtIndex:indexPath.section];
+    NSString *sectionName = category[@"name"];
     NSString *itemName = [category[@"list"] objectAtIndex:indexPath.row];
+    NSArray *selectedNames = [self.filterOptions selectedNamesForSection:sectionName];
     
-    NSString *keyName = category[@"name"];
-    NSString *selectedName = [defaults objectForKey:keyName];
-    
+    NSLog(@"---cellForRow %d:%d",indexPath.section,indexPath.row);
+    NSLog(@"name: %@ type:%@",sectionName,itemName);
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
-        if ([self.expandedCategories[keyName] isEqualToValue:@NO]) {
-            // if we're not expanded, override name is the saved default value
-            NSLog(@"category %@ not expanded so getting NSDefaults saved value %@",category[@"name"],[defaults objectForKey:keyName]);
-            itemName = selectedName;
-            NSLog(@"setting state to 1");
+        NSString *selectedName = selectedNames[0];
+        NSLog(@"Expandable Category selectedName %@",selectedNames[0]);
+        
+        if (!self.expandedCategories[sectionName] || [self.expandedCategories[sectionName] isEqualToValue:@NO]) {
+            NSLog(@"is not expanded, so setting cell name to selected value %@",selectedName);
+            filterCell.name = selectedName;
             [filterCell setSelection:2];
-        }
-        else {
-            NSLog(@"Compare %@ and %@",keyName,selectedName);
+        } else {
+            NSLog(@"Compare %@ and %@ for selected setting",itemName,selectedName);
+            filterCell.name = itemName;
             if ([itemName isEqualToString:selectedName]) {
                 [filterCell setSelection:1];
             } else {
                 [filterCell setSelection:0];
             }
         }
-        //filterCell.isSwitch = NO;
-    } else {
-        //filterCell.isSwitch = YES;
     }
-    
-    
-    filterCell.name = itemName;
-    
-    //filterCell = @"Test name";
+    else {
+        NSLog(@"unknown category setting to itemName %@",itemName);
+        filterCell.name = itemName;
+        if ([self.filterOptions isSelectedAtIndexPath:indexPath]) {
+            [filterCell setSelection:1];
+        } else {
+            [filterCell setSelection:0];
+        }
+    }
 
     return filterCell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    NSLog(@"numberOfSectionsInTableView:%d",[self.categories count]);
+    NSLog(@"numberOfSectionsInTableView:%@ %@ %d",self.filterOptions,self.filterOptions.sections,[self.filterOptions.sections count]);
     
-    return [self.categories count];
+    return [self.filterOptions.sections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSDictionary *category = [self.categories objectAtIndex:section];
+    NSDictionary *category = [self.filterOptions.sections objectAtIndex:section];
     
-    //NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
-    //NSLog(@"Category type is: %@", category[@"type"]);
+    NSLog(@"----");
+    NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
+    NSLog(@"Category type is: %@", category[@"type"]);
     
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
@@ -177,28 +155,34 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    NSMutableDictionary *category = [self.categories objectAtIndex:indexPath.section];
+    NSMutableDictionary *category = [self.filterOptions.sections objectAtIndex:indexPath.section];
     
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
-        NSString *keyName = category[@"name"];
+        NSString *sectionName = category[@"name"];
         
-        NSLog(@"checking key value at %@ to be %@",keyName,self.expandedCategories[keyName]);
+        NSLog(@"checking key value at %@ to be %@",sectionName,self.expandedCategories[sectionName]);
         // check our dictionary if this expandable class is expanded or not
-        if ([self.expandedCategories[keyName] isEqualToValue:@YES]) {
+        if ([self.expandedCategories[sectionName] isEqualToValue:@YES]) {
             NSLog(@"Already expanded, must compress");
-            [self.expandedCategories setObject:@(NO) forKey:keyName];
-            NSLog(@"setting key:%@ to row:%d object:%@",keyName,indexPath.row,[category[@"list"] objectAtIndex:indexPath.row]);
-            [defaults setObject:[category[@"list"] objectAtIndex:indexPath.row] forKey:keyName];
+            [self.expandedCategories setObject:@(NO) forKey:sectionName];
+            NSLog(@"setting key:%@ to row:%d object:%@",sectionName,indexPath.row,[category[@"list"] objectAtIndex:indexPath.row]);
+            [self.filterOptions selectedRowAtIndexPath:indexPath];
+            //[defaults setObject:[category[@"list"] objectAtIndex:indexPath.row] forKey:keyName];
             //self.options[keyName] = !self.options[keyName];
         } else {
             NSLog(@"Not expanded, must expand!");
-            [self.expandedCategories setObject:@(YES) forKey:keyName];
+            [self.expandedCategories setObject:@(YES) forKey:sectionName];
         }
 
         
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
     
+    }
+    else {
+        NSLog(@"toggling section at path %@",indexPath);
+        [self.filterOptions selectedRowAtIndexPath:indexPath];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
         /*
         if ([category[@"expanded"] isEqualToValue:@YES]) {
@@ -230,7 +214,7 @@ typedef enum FilterCategoryListTypes FilterCategoryListTypes;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    NSDictionary *category = [self.categories objectAtIndex:section];
+    NSDictionary *category = [self.filterOptions.sections objectAtIndex:section];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,30)];
     headerView.backgroundColor = [UIColor grayColor];

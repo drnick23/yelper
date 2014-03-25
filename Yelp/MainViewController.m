@@ -27,6 +27,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic,strong) YelpResultList *results;
 @property (nonatomic,strong) NSString *searchText;
 
+@property (nonatomic,strong) FilterOptions *filterOptions; // of NSDictionary
+
 @property (nonatomic,strong) YelpResultTableViewCell *prototypeCell;
 
 @end
@@ -38,6 +40,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (self) {
         NSLog(@"init main view controller with last search term %@",self.searchText);
         self.searchText = @"Thai";
+        self.filterOptions = [[FilterOptions alloc] init];
     }
     return self;
 }
@@ -99,7 +102,15 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     NSLog(@"sort by %@",[defaults objectForKey:@"Sort By"]);
     NSLog(@"category %@",[defaults objectForKey:@"Categories"]);
     
-    [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
+    /*[self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
+        self.results = [[YelpResultList alloc] initWithResponse:response];
+        NSLog(@"got search results back");
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];*/
+    
+    [self.client searchWithParameters:self.filterOptions.searchParameters success:^(AFHTTPRequestOperation *operation, id response) {
         self.results = [[YelpResultList alloc] initWithResponse:response];
         NSLog(@"got search results back");
         [self.tableView reloadData];
@@ -212,7 +223,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (IBAction)onFilter:(id)sender {
     NSLog(@"Go ahead and setup the filters view");
     
-    FiltersViewController *filtersView = [[FiltersViewController alloc] init];
+    FiltersViewController *filtersView = [[FiltersViewController alloc] initWithOptions:Nil];
     filtersView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     filtersView.delegate = self;
     

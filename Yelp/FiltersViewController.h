@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FilterOptions.h"
 
 @class FiltersViewController;
 
@@ -17,5 +18,7 @@
 @interface FiltersViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,weak) id <FiltersViewControllerDelegate> delegate;
+
+-(id)initWithOptions:(FilterOptions *)options;
 
 @end
