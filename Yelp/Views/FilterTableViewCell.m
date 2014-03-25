@@ -18,6 +18,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    //self.backgroundColor = [[UIColor alloc] initWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
 }
 
 - (void)setName:(NSString *)name {

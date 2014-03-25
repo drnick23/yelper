@@ -40,28 +40,13 @@
 -(void) setResult:(YelpResult *)result {
     _result = result;
     
-    /*self.titleLabel.text = @"A super long text lable that we don\'t know what to do with";//result.name;
-    //self.titleLabel.text = @"balls";//[NSString stringWithFormat:@"23. %@",result.name];
-    self.addressLabel.text = result.displayAddress;
-    self.ratingsLabel.text = @"123 reviews";
-    
-    UIImage *placeholderImage = [UIImage imageNamed:@"LoadingPlaceholder"];
-    [self.pictureImageView setImageWithURL:result.mainImageURL placeholderImage:placeholderImage];
-    [self.ratingsImageView setImageWithURL:result.ratingImgURL placeholderImage:nil];*/
-    
     self.nameLabel.text = [NSString stringWithFormat:@"%d. %@",result.sequenceInList,result.name];
     UIImage *placeholderImage = [UIImage imageNamed:@"LoadingPlaceholder"];
     [self.mainImageView setImageWithURL:result.mainImageURL placeholderImage:placeholderImage];
     [self.ratingImageView setImageWithURL:result.ratingImgURL placeholderImage:nil];
     
     self.displayAddressLabel.text = result.displayAddress;
-    /*if (result.displayAddress) {
-        self.displayAddressLabel.text = result.displayAddress;
-    } else {
-        self.displayAddressLabel.text = @"";
-    }*/
-    
-    //self.displayAddressLabel.text = result.displayAddress;
+ 
     
 }
 

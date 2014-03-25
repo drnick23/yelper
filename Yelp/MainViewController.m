@@ -10,6 +10,7 @@
 #import "YelpClient.h"
 #import "YelpResultTableViewCell.h"
 #import "YelpResultList.h"
+#import "MBProgressHUD.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -63,28 +64,29 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     NSLog(@"doSearch %@",searchText);
     
-    
-    NSLog(@"radius search %@",[defaults objectForKey:@"Distance"]);
-    NSLog(@"sort by %@",[defaults objectForKey:@"Sort By"]);
-    NSLog(@"category %@",[defaults objectForKey:@"Categories"]);
-    
-    /*[self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
-        self.results = [[YelpResultList alloc] initWithResponse:response];
-        NSLog(@"got search results back");
-        [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [error description]);
-    }];*/
     NSMutableDictionary *parameters = [self.filterOptions.searchParameters mutableCopy];
     [parameters setObject:searchText forKey:@"term"];
     
+    // show progress indicator when searching
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [self.client searchWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id response) {
+        
+        // hide progress indicator.
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         self.results = [[YelpResultList alloc] initWithResponse:response];
+        
         NSLog(@"got search results back");
-        [self.tableView reloadData];
+         [self refreshAfterSearch];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
     }];
+}
+
+-(void)refreshAfterSearch {
+    NSLog(@"refreshing view after search");
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
@@ -104,7 +106,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     UINib *yelpResultNib = [UINib nibWithNibName:@"YelpResultTableViewCell" bundle:nil];
     [self.tableView registerNib:yelpResultNib forCellReuseIdentifier:@"YelpResultCell"];
     
-    self.searchBar.text = [defaults objectForKey:@"searchText"];
+    NSString *searchText = [defaults objectForKey:@"searchText"];
+    if (searchText) {
+        self.searchBar.text = searchText;
+    } else {
+        self.searchBar.text = @"";
+    }
     [self doSearch];
     
 }
@@ -168,19 +175,6 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return [self.prototypeCell myHeightForResult:result];
     
 }
-
-/*- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100.0f;
- 
-    YelpResult *result = [self.results get:indexPath.row];
-    
-    CGSize textSize = [result.name sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:CGSizeMake(240, 1000) lineBreakMode:UILineBreakModeCharacterWrap];
-    
-    float height = MIN(textSize.height+100.0f, 150.0f); //Some fix height is returned if height is small or change it to MAX(textSize.height, 150.0f); // whatever best fits for you
-    
-    return height;
-}*/
-
 
 - (void)didReceiveMemoryWarning
 {

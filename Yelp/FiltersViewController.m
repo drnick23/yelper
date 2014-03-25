@@ -73,21 +73,19 @@
     NSString *itemName = [category[@"list"] objectAtIndex:indexPath.row];
     NSArray *selectedNames = [self.filterOptions selectedNamesForSection:sectionName];
     
-    NSLog(@"---cellForRow %d:%d",indexPath.section,indexPath.row);
-    NSLog(@"name: %@ type:%@",sectionName,itemName);
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
         FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
         
         NSString *selectedName = selectedNames[0];
-        NSLog(@"Expandable Category selectedName %@",selectedNames[0]);
+        //NSLog(@"Expandable Category selectedName %@",selectedNames[0]);
         
         if (!self.expandedCategories[sectionName] || [self.expandedCategories[sectionName] isEqualToValue:@NO]) {
-            NSLog(@"is not expanded, so setting cell name to selected value %@",selectedName);
+            //NSLog(@"is not expanded, so setting cell name to selected value %@",selectedName);
             filterCell.name = selectedName;
             [filterCell setSelection:2];
         } else {
-            NSLog(@"Compare %@ and %@ for selected setting",itemName,selectedName);
+            //NSLog(@"Compare %@ and %@ for selected setting",itemName,selectedName);
             filterCell.name = itemName;
             if ([itemName isEqualToString:selectedName]) {
                 [filterCell setSelection:1];
@@ -114,14 +112,11 @@
             }
             return filterCell;
         }
-
-        
-        NSLog(@"unknown category setting to itemName %@",itemName);
         
     }
-    return nil;
 
-    //return filterCell;
+    // shouldn't make it here...
+    return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -134,19 +129,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSDictionary *category = [self.filterOptions.sections objectAtIndex:section];
     
-    NSLog(@"----");
-    NSLog(@"Number of rows for section %d in %@ is %d",section,category[@"name"],[category[@"list"] count]);
-    NSLog(@"Category type is: %@", category[@"type"]);
-    
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
         NSString *keyName = category[@"name"];
         
         if ([self.expandedCategories[keyName] isEqualToValue:@YES]) {
-            NSLog(@"Expandable type expanded");
+            //NSLog(@"Expandable type expanded");
             return [category[@"list"] count];
         } else {
-            NSLog(@"Expandable type not expanded, count is 1");
+            //NSLog(@"Expandable type not expanded, count is 1");
             return 1;
         }
         
@@ -155,10 +146,10 @@
         NSString *keyName = category[@"name"];
         
         if ([self.expandedCategories[keyName] isEqualToValue:@YES] || [category[@"list"] count] <= 6) {
-            NSLog(@"Switchable type expanded");
+            //NSLog(@"Switchable type expanded");
             return [category[@"list"] count];
         } else {
-            NSLog(@"Expandable list not expanded, limited to 4");
+            //NSLog(@"Expandable list not expanded, limited to 4");
             return MIN([category[@"list"] count],5);
         }
 
@@ -168,12 +159,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // this method must be very fast for smooth scrolling.
-    if (self.expanded) {
-        return 50;
-    } else {
-        return 50;
-    }
-
+    return 40;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -184,19 +170,14 @@
     
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
-        
-        
-        NSLog(@"checking key value at %@ to be %@",sectionName,self.expandedCategories[sectionName]);
         // check our dictionary if this expandable class is expanded or not
         if ([self.expandedCategories[sectionName] isEqualToValue:@YES]) {
-            NSLog(@"Already expanded, must compress");
+            //NSLog(@"Already expanded, must compress");
             [self.expandedCategories setObject:@(NO) forKey:sectionName];
-            NSLog(@"setting key:%@ to row:%d object:%@",sectionName,indexPath.row,[category[@"list"] objectAtIndex:indexPath.row]);
             [self.filterOptions selectedRowAtIndexPath:indexPath];
-            //[defaults setObject:[category[@"list"] objectAtIndex:indexPath.row] forKey:keyName];
-            //self.options[keyName] = !self.options[keyName];
+            
         } else {
-            NSLog(@"Not expanded, must expand!");
+            //NSLog(@"Not expanded, must expand!");
             [self.expandedCategories setObject:@(YES) forKey:sectionName];
         }
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
@@ -212,22 +193,6 @@
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }
-        /*
-        if ([category[@"expanded"] isEqualToValue:@YES]) {
-            NSLog(@"Must compress expandable");
-            [category setObject:@(NO) forKey:@"expanded"];
-        } else {
-            NSLog(@"Most expand section");
-            [category setObject:@(YES) forKey:@"expanded"];
-        }*/
-        //[self.tableView reloadData];
-        /*[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];*/
-        
-    
-    
-
-    
     /*
     self.expanded = !self.expanded;
     //[self.tableView reloadData];
@@ -244,19 +209,23 @@
     
     NSDictionary *category = [self.filterOptions.sections objectAtIndex:section];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,30)];
-    headerView.backgroundColor = [UIColor grayColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10,10,300,20)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,22)];
+    headerView.backgroundColor = [UIColor redColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10,1,300,20)];
     label.text = category[@"name"];
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:12.0];
+    label.font = [UIFont systemFontOfSize:13.0];
     [headerView addSubview:label];
     return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 22;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0;
+}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -267,10 +236,11 @@
 
 - (IBAction)onSearch:(id)sender {
     NSLog(@"dismiss and search");
+    
+    // save our options, dismiss the model controller, and let the delegate know they should perform
+    // a new search
     [self.filterOptions save];
     [self dismissViewControllerAnimated:YES completion:nil];
-    // TODO: call main view controllers search functions...
-    // TODO: pass back new parameters to save from main function instead of here...
     [self.delegate addItemViewController:self didSearch:YES];
 }
 
