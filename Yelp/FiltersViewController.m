@@ -8,6 +8,7 @@
 
 #import "FiltersViewController.h"
 #import "FilterTableViewCell.h"
+#import "SeeAllTableViewCell.h"
 
 @interface FiltersViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -61,15 +62,12 @@
     // register our custom cells
     UINib *filterCellNib = [UINib nibWithNibName:@"FilterTableViewCell" bundle:nil];
     [self.tableView registerNib:filterCellNib forCellReuseIdentifier:@"FilterCell"];
+    UINib *seeAllCellNib = [UINib nibWithNibName:@"SeeAllTableViewCell" bundle:nil];
+    [self.tableView registerNib:seeAllCellNib forCellReuseIdentifier:@"SeeAllCell"];
 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    static NSString *CellIdentifier = @"FilterCell";
-    FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     NSDictionary *category = [self.filterOptions.sections objectAtIndex:indexPath.section];
     NSString *sectionName = category[@"name"];
@@ -79,6 +77,9 @@
     NSLog(@"---cellForRow %d:%d",indexPath.section,indexPath.row);
     NSLog(@"name: %@ type:%@",sectionName,itemName);
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
+        
+        FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
+        
         NSString *selectedName = selectedNames[0];
         NSLog(@"Expandable Category selectedName %@",selectedNames[0]);
         
@@ -95,18 +96,33 @@
                 [filterCell setSelection:0];
             }
         }
+        
+        return filterCell;
     }
-    else {
-        NSLog(@"unknown category setting to itemName %@",itemName);
-        filterCell.name = itemName;
-        if ([self.filterOptions isSelectedAtIndexPath:indexPath]) {
-            [filterCell setSelection:1];
+    else if ([category[@"type"] isEqualToValue:@(kTypeSwitches)]) {
+        
+        if (!self.expandedCategories[sectionName] && (indexPath.row > 3)) {
+            SeeAllTableViewCell *seeAllCell = [self.tableView dequeueReusableCellWithIdentifier:@"SeeAllCell" forIndexPath:indexPath];
+            return seeAllCell;
         } else {
-            [filterCell setSelection:0];
+            NSLog(@"Switchable type expanded");
+            FilterTableViewCell *filterCell = [self.tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
+            filterCell.name = itemName;
+            if ([self.filterOptions isSelectedAtIndexPath:indexPath]) {
+                [filterCell setSelection:1];
+            } else {
+                [filterCell setSelection:0];
+            }
+            return filterCell;
         }
-    }
 
-    return filterCell;
+        
+        NSLog(@"unknown category setting to itemName %@",itemName);
+        
+    }
+    return nil;
+
+    //return filterCell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -136,8 +152,19 @@
         }
         
     }
-    
-    return [category[@"list"] count];
+    else if ([category[@"type"] isEqualToValue:@(kTypeSwitches)]) {
+        NSString *keyName = category[@"name"];
+        
+        if ([self.expandedCategories[keyName] isEqualToValue:@YES] || [category[@"list"] count] <= 6) {
+            NSLog(@"Switchable type expanded");
+            return [category[@"list"] count];
+        } else {
+            NSLog(@"Expandable list not expanded, limited to 4");
+            return MIN([category[@"list"] count],5);
+        }
+
+    }
+    else return [category[@"list"] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -151,15 +178,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     NSMutableDictionary *category = [self.filterOptions.sections objectAtIndex:indexPath.section];
+    NSString *sectionName = category[@"name"];
     
     if ([category[@"type"] isEqualToValue:@(kTypeExpandable)]) {
         
-        NSString *sectionName = category[@"name"];
+        
         
         NSLog(@"checking key value at %@ to be %@",sectionName,self.expandedCategories[sectionName]);
         // check our dictionary if this expandable class is expanded or not
@@ -176,10 +202,20 @@
         }
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
     }
-    else {
-        NSLog(@"toggling section at path %@",indexPath);
-        [self.filterOptions selectedRowAtIndexPath:indexPath];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    else if ([category[@"type"] isEqualToValue:@(kTypeSwitches)]) {
+
+        if (!self.expandedCategories[sectionName] && (indexPath.row > 3)) {
+            [self.expandedCategories setObject:@(YES) forKey:sectionName];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+             NSLog(@"toggling section at path %@",indexPath);
+            [self.filterOptions selectedRowAtIndexPath:indexPath];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+
+        
+       
+        
     }
         /*
         if ([category[@"expanded"] isEqualToValue:@YES]) {

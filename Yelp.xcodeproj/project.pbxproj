@@ -17,6 +17,8 @@
 		01E2C64F18DF26E70074477A /* YelpResultList.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C64E18DF26E70074477A /* YelpResultList.m */; };
 		01E2C65218E1D9430074477A /* FilterOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C65118E1D9430074477A /* FilterOptions.m */; };
 		01E2C65518E1FAED0074477A /* FilterOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C65418E1FAED0074477A /* FilterOption.m */; };
+		01E2C65918E20A710074477A /* SeeAllTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E2C65718E20A710074477A /* SeeAllTableViewCell.m */; };
+		01E2C65A18E20A710074477A /* SeeAllTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2C65818E20A710074477A /* SeeAllTableViewCell.xib */; };
 		420474F618DC299500E88E07 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F518DC299500E88E07 /* YelpClient.m */; };
 		420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F918DC2B2100E88E07 /* MainViewController.m */; };
 		420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420474FA18DC2B2100E88E07 /* MainViewController.xib */; };
@@ -63,6 +65,9 @@
 		01E2C65118E1D9430074477A /* FilterOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterOptions.m; path = Models/FilterOptions.m; sourceTree = "<group>"; };
 		01E2C65318E1FAED0074477A /* FilterOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterOption.h; path = Models/FilterOption.h; sourceTree = "<group>"; };
 		01E2C65418E1FAED0074477A /* FilterOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterOption.m; path = Models/FilterOption.m; sourceTree = "<group>"; };
+		01E2C65618E20A710074477A /* SeeAllTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeeAllTableViewCell.h; path = Views/SeeAllTableViewCell.h; sourceTree = "<group>"; };
+		01E2C65718E20A710074477A /* SeeAllTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeeAllTableViewCell.m; path = Views/SeeAllTableViewCell.m; sourceTree = "<group>"; };
+		01E2C65818E20A710074477A /* SeeAllTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SeeAllTableViewCell.xib; path = Views/SeeAllTableViewCell.xib; sourceTree = "<group>"; };
 		420474F418DC299500E88E07 /* YelpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
 		420474F518DC299500E88E07 /* YelpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
 		420474F818DC2B2100E88E07 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -120,6 +125,9 @@
 				0126798218DC90FD002DB785 /* YelpResultTableViewCell.m */,
 				0126798318DC90FD002DB785 /* YelpResultTableViewCell.xib */,
 				0126798D18DDC54C002DB785 /* FilterTableViewCell.h */,
+				01E2C65618E20A710074477A /* SeeAllTableViewCell.h */,
+				01E2C65718E20A710074477A /* SeeAllTableViewCell.m */,
+				01E2C65818E20A710074477A /* SeeAllTableViewCell.xib */,
 				0126798E18DDC54C002DB785 /* FilterTableViewCell.m */,
 				0126798F18DDC54C002DB785 /* FilterTableViewCell.xib */,
 			);
@@ -316,6 +324,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01E2C65A18E20A710074477A /* SeeAllTableViewCell.xib in Resources */,
 				0126798518DC90FD002DB785 /* YelpResultTableViewCell.xib in Resources */,
 				0126799118DDC54C002DB785 /* FilterTableViewCell.xib in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
@@ -374,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				017CC8AA18DDC3370064CFD6 /* FiltersViewController.m in Sources */,
+				01E2C65918E20A710074477A /* SeeAllTableViewCell.m in Sources */,
 				0126799018DDC54C002DB785 /* FilterTableViewCell.m in Sources */,
 				0126798C18DC9525002DB785 /* YelpResult.m in Sources */,
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
