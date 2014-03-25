@@ -77,12 +77,18 @@
 
         // TODO: load selections from NSDefaults...
         //self.selections = [[NSMutableDictionary alloc] initWithCapacity:20];
-        self.selections = [@{
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        self.selections = [[defaults objectForKey:@"FilterOptions"] mutableCopy];
+        
+        // if no saved selections, then start with a default set.
+        if (!self.selections) {
+                            self.selections = [@{
                              @"Most Popular": [@[@"Offering a Deal"] mutableCopy],
                              @"Distance": [@[@"2 blocks"] mutableCopy],
                              @"Sort By": [@[@"Best Match"] mutableCopy],
                              @"Categories": [@[@"Automotive",@"Food"] mutableCopy]
                            } mutableCopy];
+        }
     }
     return self;
 }
@@ -134,6 +140,11 @@
 }
 -(NSArray *)selectedNamesForSection:(NSString *)sectionName {
     return [self.selections objectForKey:sectionName];
+}
+-(void)save {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.selections forKey:@"FilterOptions"];
+    NSLog(@"Saved options");
 }
 
 @end

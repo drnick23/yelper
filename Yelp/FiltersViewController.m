@@ -174,10 +174,7 @@
             NSLog(@"Not expanded, must expand!");
             [self.expandedCategories setObject:@(YES) forKey:sectionName];
         }
-
-        
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-    
     }
     else {
         NSLog(@"toggling section at path %@",indexPath);
@@ -239,6 +236,7 @@
 
 - (IBAction)onSearch:(id)sender {
     NSLog(@"dismiss and search");
+    [self.filterOptions save];
     [self dismissViewControllerAnimated:YES completion:nil];
     // TODO: call main view controllers search functions...
     // TODO: pass back new parameters to save from main function instead of here...

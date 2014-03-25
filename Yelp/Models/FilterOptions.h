@@ -24,6 +24,9 @@ typedef enum FilterSectionTypes FilterSectionTypes;
 -(void)selectedRowAtIndexPath:(NSIndexPath *)indexPath;
 -(BOOL)isSelectedAtIndexPath:(NSIndexPath *)indexPath;
 
+// save options to NSDefaults
+-(void)save;
+
 -(NSArray *)selectedNamesForSection:(NSString *)sectionName;
 
 @end
