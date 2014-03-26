@@ -61,6 +61,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (void)doSearch {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *searchText = [defaults objectForKey:@"searchText"];
+    if (!searchText) searchText = @"";
     
     NSLog(@"doSearch %@",searchText);
     
