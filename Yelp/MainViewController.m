@@ -82,6 +82,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
          [self refreshAfterSearch];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
+        // hide progress indicator.
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 

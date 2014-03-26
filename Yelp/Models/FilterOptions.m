@@ -84,9 +84,9 @@
         if (!self.selections) {
                             self.selections = [@{
                              @"Most Popular": [@[@"Offering a Deal"] mutableCopy],
-                             @"Distance": [@[@"2 blocks"] mutableCopy],
+                             @"Distance": [@[@"5 miles"] mutableCopy],
                              @"Sort By": [@[@"Best Match"] mutableCopy],
-                             @"Categories": [@[@"Automotive",@"Food"] mutableCopy]
+                             @"Categories": [@[@"Food"] mutableCopy]
                            } mutableCopy];
         }
     }
@@ -118,7 +118,7 @@
             //NSLog(@"Cast item %@",castItem[@"name"]);
             [categoryFilter appendFormat:@"%@,",self.mapYelpCategories[arrayItem]];
         }
-    }
+     }
     if (categoryFilter) {
         [parameters setObject:[categoryFilter substringToIndex:[categoryFilter length]-1] forKey:@"category_filter"];
     }
