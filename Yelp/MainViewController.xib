@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="navigationBar" destination="1Ok-wA-mHo" id="rgT-ix-E5u"/>
                 <outlet property="searchBar" destination="Ekc-Mn-NXE" id="NLo-o0-gJS"/>
-                <outlet property="searchDisplayController" destination="g8s-61-gv7" id="Phs-Gy-ciy"/>
                 <outlet property="tableView" destination="gLR-2i-6tI" id="T7M-Dn-mEZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -53,14 +52,5 @@
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
-        <searchDisplayController id="g8s-61-gv7">
-            <connections>
-                <outlet property="delegate" destination="-1" id="kH3-LC-Eb2"/>
-                <outlet property="searchBar" destination="Ekc-Mn-NXE" id="2WT-UF-j2q"/>
-                <outlet property="searchContentsController" destination="-1" id="Kcp-Ht-nCh"/>
-                <outlet property="searchResultsDataSource" destination="-1" id="Vk4-nz-Ybf"/>
-                <outlet property="searchResultsDelegate" destination="-1" id="YZU-6B-KbE"/>
-            </connections>
-        </searchDisplayController>
     </objects>
 </document>

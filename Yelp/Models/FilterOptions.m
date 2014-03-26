@@ -62,7 +62,7 @@
                                             };
         
         self.mapDistanceToRadius = @{
-                                              @"Auto":@0,
+                                              //@"Auto":@0, // we leave this out because yelp complains if it's 0...
                                               @"2 blocks":@200,
                                               @"6 blocks":@600,
                                               @"1 mile":@(1600),
@@ -100,7 +100,7 @@
     NSMutableDictionary *parameters = [@{@"location" : @"San Francisco"} mutableCopy];
     
     NSNumber *radiusFilter = [self.mapDistanceToRadius objectForKey:[self.selections objectForKey:@"Distance"][0]];
-    if (radiusFilter) {
+    if (radiusFilter && (radiusFilter != 0)) {
         [parameters setObject:radiusFilter forKey:@"radius_filter"];
     }
     
