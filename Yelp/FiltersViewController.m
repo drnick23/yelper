@@ -241,7 +241,8 @@
     // a new search
     [self.filterOptions save];
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate addItemViewController:self didSearch:YES];
+    [self.delegate updateFilterOptions:self.filterOptions];
+    //[self.delegate addItemViewController:self didSearch:YES];
 }
 
 - (IBAction)onCancel:(id)sender {

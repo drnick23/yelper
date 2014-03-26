@@ -12,7 +12,8 @@
 @class FiltersViewController;
 
 @protocol FiltersViewControllerDelegate <NSObject>
--(void) addItemViewController:(FiltersViewController *)controller didSearch:(BOOL)doSearch;
+//-(void) addItemViewController:(FiltersViewController *)controller didSearch:(BOOL)doSearch;
+-(void) updateFilterOptions:(FilterOptions *)filterOptions;
 @end
 
 @interface FiltersViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>

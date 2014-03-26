@@ -195,13 +195,19 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self presentViewController:filtersView animated:YES completion:nil];
 }
 
--(void)addItemViewController:(FiltersViewController *)controller didSearch:(BOOL)doSearch {
+/*-(void)addItemViewController:(FiltersViewController *)controller didSearch:(BOOL)doSearch {
     NSLog(@"Got call back from filters model with %hhd",doSearch);
     if (doSearch) {
         self.filterOptions = [[FilterOptions alloc] init];;
         [self doSearch];
     }
     
+}*/
+
+-(void) updateFilterOptions:(FilterOptions *)filterOptions {
+    self.filterOptions = filterOptions;
+    NSLog(@"Got call back from filters model with %@",filterOptions);
+    [self doSearch];
 }
 
 @end
